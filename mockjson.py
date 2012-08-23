@@ -6,6 +6,7 @@ import re
 import string
 import types
 
+
 data = {
     'NUMBER' : tuple("0123456789"),
     'LETTER_UPPER' : tuple(string.uppercase),
@@ -45,6 +46,33 @@ def _random_data(key) :
         return d
     raise Exception('invalid key type')
 
+
+def _random_email():
+    l = _random_data('@LETTER_LOWER')
+    n1 = _random_data('@LAST_NAME').lower()
+    n2 = _random_data('@LAST_NAME').lower()
+    return l + '.' + n1 + '@' + n2 + '.com'
+
+def _lorem():
+    words = tuple("""lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum""".split())
+    return words[random.randrange(len(words))]
+
+def _lorem_ipsum():
+    words = tuple("""Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum""".split())
+    length = random.randrange(len(words)/2)
+
+    # TODO min length here, apparently I don't understand python ternarys
+    #length = length if length < 3 else 3
+    result = ''
+    for i in range(length):
+        result += ' ' + words[random.randrange(len(words))]
+    return result.strip()
+
+
+# additional data definitions that are dependent on functions
+data['EMAIL'] = _random_email
+data['LOREM'] = _lorem
+data['LOREM_IPSUM'] = _lorem_ipsum
 
 def generate_json_object(template, name=None):
     #print template, name
