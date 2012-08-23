@@ -32,8 +32,8 @@ data = {
 def random_data(key) :
     key = key.lstrip('@')
 
-    params = re.search(r"\(([^\)]+)\)/g", key)
-    params = params.groups() if params else []
+    params = re.findall(r"\(([^\)]+)\)", key)
+    params = params if params else []
 
     if not data.has_key(key):
         return key #FIXME log or exception
@@ -88,12 +88,9 @@ def generate_json(template, name=None):
             length = length if length else 1
             for i in range(length):
                 generated += template
-            print 'generated', generated
-            matches = re.search(r"@([A-Z_0-9\(\),]+)/g", generated)
-            # FIXME this is never matching, regex is broken
-            print 'matches', matches
+            matches = re.findall(r"(@[A-Z_0-9\(\),]+)", generated)
             if matches:
-                for key in matches.groups():
+                for key in matches:
                     generated = generated.replace(key, random_data(key))
         else:
             generated = ''.join(random.choice(string.letters) for i in xrange(length))
