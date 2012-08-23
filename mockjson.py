@@ -6,26 +6,25 @@ import re
 import string
 import types
 
-# FIXME should this be tuples or list?
 data = {
     'NUMBER' : tuple("0123456789"),
     'LETTER_UPPER' : tuple(string.uppercase),
     'LETTER_LOWER' : tuple(string.lowercase),
-    'MALE_FIRST_NAME' : ["James", "John", "Robert", "Michael", "William", "David",
+    'MALE_FIRST_NAME' : ("James", "John", "Robert", "Michael", "William", "David",
         "Richard", "Charles", "Joseph", "Thomas", "Christopher", "Daniel", 
         "Paul", "Mark", "Donald", "George", "Kenneth", "Steven", "Edward",
         "Brian", "Ronald", "Anthony", "Kevin", "Jason", "Matthew", "Gary",
-        "Timothy", "Jose", "Larry", "Jeffrey", "Frank", "Scott", "Eric"],
-    'FEMALE_FIRST_NAME' : ["Mary", "Patricia", "Linda", "Barbara", "Elizabeth", 
+        "Timothy", "Jose", "Larry", "Jeffrey", "Frank", "Scott", "Eric"),
+    'FEMALE_FIRST_NAME' : ("Mary", "Patricia", "Linda", "Barbara", "Elizabeth", 
         "Jennifer", "Maria", "Susan", "Margaret", "Dorothy", "Lisa", "Nancy", 
         "Karen", "Betty", "Helen", "Sandra", "Donna", "Carol", "Ruth", "Sharon",
         "Michelle", "Laura", "Sarah", "Kimberly", "Deborah", "Jessica", 
-        "Shirley", "Cynthia", "Angela", "Melissa", "Brenda", "Amy", "Anna"], 
-    'LAST_NAME' : ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
+        "Shirley", "Cynthia", "Angela", "Melissa", "Brenda", "Amy", "Anna"), 
+    'LAST_NAME' : ("Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
         "Davis", "Garcia", "Rodriguez", "Wilson", "Martinez", "Anderson",
         "Taylor", "Thomas", "Hernandez", "Moore", "Martin", "Jackson",
         "Thompson", "White", "Lopez", "Lee", "Gonzalez", "Harris", "Clark",
-        "Lewis", "Robinson", "Walker", "Perez", "Hall", "Young", "Allen"]
+        "Lewis", "Robinson", "Walker", "Perez", "Hall", "Young", "Allen")
 }
 
 
