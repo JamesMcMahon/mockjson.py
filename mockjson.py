@@ -32,7 +32,7 @@ data = {
 def random_data(key) :
     key = key.lstrip('@')
 
-    params = re.match(r"\(([^\)]+)\)/g", key)
+    params = re.search(r"\(([^\)]+)\)/g", key)
     params = params.groups() if params else []
 
     if not data.has_key(key):
@@ -48,11 +48,11 @@ def random_data(key) :
 
 
 def generate_json(template, name=None):
-    print template, name
+    #print template, name
 
     length = 0
     if name:
-        matches = re.match(r"\w+\|(\d+)-(\d+)", name)
+        matches = re.search(r"\w+\|(\d+)-(\d+)", name)
         if matches:
             groups = matches.groups()
             length_min = int(groups[0])
@@ -68,27 +68,30 @@ def generate_json(template, name=None):
             generated[stripped_key] = generate_json(value, key)
             
             # handle increments
-            inc_matches = re.match(r"\w+\|\+(\d+)", key)
-            if inc_matches and t_type is int:
-                increment = int(inc_matches.group()[1])
-                # FIXME finish increments, honestly don't understand this yet
+            inc_matches = re.search(r"\w+\|\+(\d+)", key)
+            if inc_matches and type(template[key]) is int:
+                increment = int(inc_matches.groups()[0])
+                template[key] += increment
     elif t_type is list:
         generated = []
-        for value in template:
-            # value recursively passed in js was always [0], not sure why
-            generated.append(generate_json(value))
+        for i in range(length):
+            generated.append(generate_json(template[0]))
     elif t_type is int:
         generated = length if matches else template
     elif t_type is bool:
         # apparently getrandbits(1) is faster...
         generated = random.choice([True, False]) if matches else template
-    elif t_type is str:
+    # is this always just going to be unicode here?
+    elif t_type is str or t_type is unicode:
         if template:
             generated = ''
             length = length if length else 1
             for i in range(length):
                 generated += template
-            matches = re.match(r"@([A-Z_0-9\(\),]+)/g", generated)
+            print 'generated', generated
+            matches = re.search(r"@([A-Z_0-9\(\),]+)/g", generated)
+            # FIXME this is never matching, regex is broken
+            print 'matches', matches
             if matches:
                 for key in matches.groups():
                     generated = generated.replace(key, random_data(key))
@@ -103,4 +106,4 @@ def generate_json(template, name=None):
 if __name__ == '__main__':
     with open('test.template.json') as f:
         json_data = json.load(f)
-    print json.dumps(generate_json(json_data))
+    print(json.dumps(generate_json(json_data), sort_keys=False))
