@@ -40,7 +40,7 @@ def _random_data(key) :
     d = data[key]
     k_type = type(d)
     if k_type is list or k_type is tuple:
-        return d[random.randint(0, len(d) - 1)]
+        return d[random.randrange(len(d))]
     elif k_type is types.FunctionType:
         return d
     raise Exception('invalid key type')
