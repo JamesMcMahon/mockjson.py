@@ -28,7 +28,7 @@ data = {
 }
 
 
-def random_data(key) :
+def _random_data(key) :
     key = key.lstrip('@')
 
     params = re.findall(r"\(([^\)]+)\)", key)
@@ -46,7 +46,7 @@ def random_data(key) :
     raise Exception('invalid key type')
 
 
-def generate_json(template, name=None):
+def generate_json_object(template, name=None):
     #print template, name
 
     length = 0
@@ -64,7 +64,7 @@ def generate_json(template, name=None):
         generated = {}
         for key, value in template.iteritems():
             stripped_key = re.sub(r"\|(\d+-\d+|\+\d+)",'', key) 
-            generated[stripped_key] = generate_json(value, key)
+            generated[stripped_key] = generate_json_object(value, key)
             
             # handle increments
             inc_matches = re.search(r"\w+\|\+(\d+)", key)
@@ -74,7 +74,7 @@ def generate_json(template, name=None):
     elif t_type is list:
         generated = []
         for i in range(length):
-            generated.append(generate_json(template[0]))
+            generated.append(generate_json_object(template[0]))
     elif t_type is int:
         generated = length if matches else template
     elif t_type is bool:
@@ -90,16 +90,19 @@ def generate_json(template, name=None):
             matches = re.findall(r"(@[A-Z_0-9\(\),]+)", generated)
             if matches:
                 for key in matches:
-                    generated = generated.replace(key, random_data(key))
+                    generated = generated.replace(key, _random_data(key))
         else:
             generated = ''.join(random.choice(string.letters) for i in xrange(length))
-
     else:
         generated = template
-
     return generated
+
+
+def generate_json(template, name=None):
+    return json.dumps(generate_json_object(json_data), sort_keys=False)
+
 
 if __name__ == '__main__':
     with open('test.template.json') as f:
         json_data = json.load(f)
-    print(json.dumps(generate_json(json_data), sort_keys=False))
+    print(generate_json(json_data))
