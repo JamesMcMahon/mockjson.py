@@ -6,6 +6,7 @@ import re
 import string
 import types
 
+from datetime import datetime, timedelta
 
 data = {
     'NUMBER' : tuple("0123456789"),
@@ -53,9 +54,11 @@ def _random_email():
     n2 = _random_data('@LAST_NAME').lower()
     return l + '.' + n1 + '@' + n2 + '.com'
 
+
 def _lorem():
     words = tuple("""lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum""".split())
     return words[random.randrange(len(words))]
+
 
 def _lorem_ipsum():
     words = tuple("""Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum""".split())
@@ -69,10 +72,45 @@ def _lorem_ipsum():
     return result.strip()
 
 
+def _random_date():
+    return datetime.today() - timedelta(days = random.randrange(6571, 27375))
+
+
+def _random_year():
+    return str(_random_date().year)
+
+
+def _random_month():
+    return str(_random_date().month).zfill(2)
+
+
+def _random_day():
+    return str(_random_date().day).zfill(2)
+
+
+def _random_hour():
+    return str(_random_date().hour).zfill(2)
+
+
+def _random_minutes():
+    return str(_random_date().minute).zfill(2)
+
+
+def _random_seconds():
+    return str(_random_date().second).zfill(2)
+
+
 # additional data definitions that are dependent on functions
 data['EMAIL'] = _random_email
 data['LOREM'] = _lorem
 data['LOREM_IPSUM'] = _lorem_ipsum
+data['DATE_YYYY'] = _random_year
+data['DATE_MM'] = _random_month
+data['DATE_DD'] = _random_day
+data['TIME_HH'] = _random_hour
+data['TIME_MM'] = _random_minutes
+data['TIME_SS'] = _random_seconds
+
 
 def generate_json_object(template, name=None):
     #print template, name
