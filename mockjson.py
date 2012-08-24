@@ -2,10 +2,9 @@
 
 """mockjson.py: Library for mocking JSON objects from a template."""
 
-__author__      = "James McMahon"
-__copyright__   = "Copyright 2012, James McMahon"
-__license__     = "MIT"
-
+__author__ = "James McMahon"
+__copyright__ = "Copyright 2012, James McMahon"
+__license__ = "MIT"
 
 import json
 import random
@@ -17,20 +16,20 @@ import types
 from datetime import datetime, timedelta
 
 data = {
-    'NUMBER' : tuple("0123456789"),
-    'LETTER_UPPER' : tuple(string.uppercase),
-    'LETTER_LOWER' : tuple(string.lowercase),
-    'MALE_FIRST_NAME' : ("James", "John", "Robert", "Michael", "William", "David",
-        "Richard", "Charles", "Joseph", "Thomas", "Christopher", "Daniel", 
+    'NUMBER': tuple("0123456789"),
+    'LETTER_UPPER': tuple(string.uppercase),
+    'LETTER_LOWER': tuple(string.lowercase),
+    'MALE_FIRST_NAME': ("James", "John", "Robert", "Michael", "William", "David",
+        "Richard", "Charles", "Joseph", "Thomas", "Christopher", "Daniel",
         "Paul", "Mark", "Donald", "George", "Kenneth", "Steven", "Edward",
         "Brian", "Ronald", "Anthony", "Kevin", "Jason", "Matthew", "Gary",
         "Timothy", "Jose", "Larry", "Jeffrey", "Frank", "Scott", "Eric"),
-    'FEMALE_FIRST_NAME' : ("Mary", "Patricia", "Linda", "Barbara", "Elizabeth", 
-        "Jennifer", "Maria", "Susan", "Margaret", "Dorothy", "Lisa", "Nancy", 
+    'FEMALE_FIRST_NAME': ("Mary", "Patricia", "Linda", "Barbara", "Elizabeth",
+        "Jennifer", "Maria", "Susan", "Margaret", "Dorothy", "Lisa", "Nancy",
         "Karen", "Betty", "Helen", "Sandra", "Donna", "Carol", "Ruth", "Sharon",
-        "Michelle", "Laura", "Sarah", "Kimberly", "Deborah", "Jessica", 
-        "Shirley", "Cynthia", "Angela", "Melissa", "Brenda", "Amy", "Anna"), 
-    'LAST_NAME' : ("Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
+        "Michelle", "Laura", "Sarah", "Kimberly", "Deborah", "Jessica",
+        "Shirley", "Cynthia", "Angela", "Melissa", "Brenda", "Amy", "Anna"),
+    'LAST_NAME': ("Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
         "Davis", "Garcia", "Rodriguez", "Wilson", "Martinez", "Anderson",
         "Taylor", "Thomas", "Hernandez", "Moore", "Martin", "Jackson",
         "Thompson", "White", "Lopez", "Lee", "Gonzalez", "Harris", "Clark",
@@ -38,14 +37,14 @@ data = {
 }
 
 
-def _random_data(key) :
+def _random_data(key):
     key = key.lstrip('@')
 
     params = re.findall(r"\(([^\)]+)\)", key)
     params = params if params else []
 
     if not data.has_key(key):
-        return key #FIXME log or exception
+        return key  # FIXME log or exception
 
     d = data[key]
     k_type = type(d)
@@ -82,7 +81,7 @@ def _lorem_ipsum():
             reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum""".split())
-    length = random.randrange(len(words)/2)
+    length = random.randrange(len(words) / 2)
 
     # TODO min length here, apparently I don't understand python ternarys
     #length = length if length < 3 else 3
@@ -93,7 +92,7 @@ def _lorem_ipsum():
 
 
 def _random_date():
-    return datetime.today() - timedelta(days = random.randrange(6571, 27375))
+    return datetime.today() - timedelta(days=random.randrange(6571, 27375))
 
 
 def _random_year():
@@ -118,7 +117,6 @@ def _random_minutes():
 
 def _random_seconds():
     return str(_random_date().second).zfill(2)
-
 
 # additional data definitions that are dependent on functions
 data['EMAIL'] = _random_email
@@ -147,9 +145,9 @@ def generate_json_object(template, name=None):
     if t_type is dict:
         generated = {}
         for key, value in template.iteritems():
-            stripped_key = re.sub(r"\|(\d+-\d+|\+\d+)",'', key) 
+            stripped_key = re.sub(r"\|(\d+-\d+|\+\d+)", '', key)
             generated[stripped_key] = generate_json_object(value, key)
-            
+
             # handle increments
             inc_matches = re.search(r"\w+\|\+(\d+)", key)
             if inc_matches and type(template[key]) is int:
