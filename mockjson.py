@@ -170,7 +170,7 @@ def generate_json_object(template, name=None):
                     rd = _random_data(key)
                     if type(rd) is types.FunctionType:
                         rd = rd()
-                    generated = generated.replace(key, rd)
+                    generated = generated.replace(key, rd, 1)
         else:
             generated = ''.join(random.choice(string.letters) for i in xrange(length))
     else:
