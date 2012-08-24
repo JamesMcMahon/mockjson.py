@@ -157,7 +157,10 @@ def generate_json_object(template, name=None):
             matches = re.findall(r"(@[A-Z_0-9\(\),]+)", generated)
             if matches:
                 for key in matches:
-                    generated = generated.replace(key, _random_data(key))
+                    rd = _random_data(key)
+                    if type(rd) is types.FunctionType:
+                        rd = rd()
+                    generated = generated.replace(key, rd)
         else:
             generated = ''.join(random.choice(string.letters) for i in xrange(length))
     else:
