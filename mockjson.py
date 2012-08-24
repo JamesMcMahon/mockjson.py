@@ -83,8 +83,7 @@ def _lorem_ipsum():
             culpa qui officia deserunt mollit anim id est laborum""".split())
     length = random.randrange(len(words) / 2)
 
-    # TODO min length here, apparently I don't understand python ternarys
-    #length = length if length < 3 else 3
+    length = length if length > 2 else 2
     result = ''
     for i in range(length):
         result += ' ' + words[random.randrange(len(words))]
