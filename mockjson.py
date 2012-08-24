@@ -4,6 +4,7 @@ import json
 import random
 import re
 import string
+import sys
 import types
 
 from datetime import datetime, timedelta
@@ -169,6 +170,7 @@ def generate_json(template, name=None):
 
 
 if __name__ == '__main__':
-    with open('test.template.json') as f:
+    arg = sys.argv[1:]
+    with open(arg) as f:
         json_data = json.load(f)
     print(generate_json(json_data))
