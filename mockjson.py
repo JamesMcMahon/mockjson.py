@@ -170,7 +170,7 @@ def generate_json(template, name=None):
 
 
 if __name__ == '__main__':
-    arg = sys.argv[1:]
+    arg = sys.argv[1:][0]
     with open(arg) as f:
         json_data = json.load(f)
     print(generate_json(json_data))
