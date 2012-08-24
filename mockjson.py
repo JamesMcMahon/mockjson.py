@@ -114,8 +114,6 @@ data['TIME_SS'] = _random_seconds
 
 
 def generate_json_object(template, name=None):
-    #print template, name
-
     length = 0
     if name:
         matches = re.search(r"\w+\|(\d+)-(\d+)", name)
