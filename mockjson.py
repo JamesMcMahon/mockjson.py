@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+"""mockjson.py: Library for mocking JSON objects from a template."""
+
+__author__      = "James McMahon"
+__copyright__   = "Copyright 2012, James McMahon"
+__license__     = "MIT"
+
+
 import json
 import random
 import re
