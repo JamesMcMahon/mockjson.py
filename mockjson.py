@@ -40,7 +40,7 @@ def _random_item(items):
 
 def _random_data(key):
     key = key.lstrip('@')
-    if not data.has_key(key):
+    if not key in data:
         return key
     return data[key]()
 
