@@ -2,9 +2,9 @@
 
 """mockjson.py: Library for mocking JSON objects from a template."""
 
-__author__    = "James McMahon"
+__author__ = "James McMahon"
 __copyright__ = "Copyright 2012, James McMahon"
-__license__   = "MIT"
+__license__ = "MIT"
 
 import json
 import random
@@ -40,6 +40,7 @@ def _random_data(key):
     if not data.has_key(key):
         return key
     return data[key]()
+
 
 def _random_email():
     l = _random_data('@LETTER_LOWER')
@@ -103,7 +104,6 @@ def _random_minutes():
 def _random_seconds():
     return str(_random_date().second).zfill(2)
 
-
 data = {
     'NUMBER': lambda: _random_item("0123456789"),
     'LETTER_UPPER': lambda: _random_item(string.uppercase),
@@ -111,7 +111,7 @@ data = {
     'MALE_FIRST_NAME': lambda: _random_item(_male_first_name),
     'FEMALE_FIRST_NAME': lambda: _random_item(_female_first_name),
     'LAST_NAME': lambda: _random_item(_last_name),
-    'EMAIL':  _random_email,
+    'EMAIL': _random_email,
     'LOREM': _lorem,
     'LOREM_IPSUM': _lorem_ipsum,
     'DATE_YYYY': _random_year,
