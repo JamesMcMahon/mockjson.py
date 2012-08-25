@@ -81,30 +81,6 @@ def _lorem_ipsum():
 def _random_date():
     return datetime.today() - timedelta(days=random.randrange(6571, 27375))
 
-
-def _random_year():
-    return str(_random_date().year)
-
-
-def _random_month():
-    return str(_random_date().month).zfill(2)
-
-
-def _random_day():
-    return str(_random_date().day).zfill(2)
-
-
-def _random_hour():
-    return str(_random_date().hour).zfill(2)
-
-
-def _random_minutes():
-    return str(_random_date().minute).zfill(2)
-
-
-def _random_seconds():
-    return str(_random_date().second).zfill(2)
-
 data = {
     'NUMBER': lambda: _random_item("0123456789"),
     'LETTER_UPPER': lambda: _random_item(string.uppercase),
@@ -115,12 +91,12 @@ data = {
     'EMAIL': _random_email,
     'LOREM': _lorem,
     'LOREM_IPSUM': _lorem_ipsum,
-    'DATE_YYYY': _random_year,
-    'DATE_MM': _random_month,
-    'DATE_DD': _random_day,
-    'TIME_HH': _random_hour,
-    'TIME_MM': _random_minutes,
-    'TIME_SS': _random_seconds
+    'DATE_YYYY': lambda: str(_random_date().year),
+    'DATE_MM': lambda: str(_random_date().month).zfill(2),
+    'DATE_DD': lambda: str(_random_date().day).zfill(2),
+    'TIME_HH': lambda: str(_random_date().hour).zfill(2),
+    'TIME_MM': lambda: str(_random_date().minute).zfill(2),
+    'TIME_SS': lambda: str(_random_date().second).zfill(2)
 }
 
 
