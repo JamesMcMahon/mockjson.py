@@ -66,7 +66,7 @@ def _lorem_ipsum():
             culpa qui officia deserunt mollit anim id est laborum""".split())
     length = random.randrange(2, len(words) / 2)
     result = ''
-    for i in range(length):
+    for i in xrange(length):
         result += ' ' + words[random.randrange(len(words))]
     return result.strip()
 
@@ -123,7 +123,7 @@ def generate_json_object(template, name=None):
                 template[key] += increment
     elif t_type is list:
         generated = []
-        for i in range(length):
+        for i in xrange(length):
             generated.append(generate_json_object(template[0]))
     elif t_type is int:
         generated = length if matches else template
@@ -144,7 +144,7 @@ def generate_json_object(template, name=None):
                     generated = generated.replace(key, rd, 1)
         else:
             generated = (''.join(random.choice(string.letters)
-                         for i in range(length)))
+                         for i in xrange(length)))
     else:
         generated = template
     return generated
