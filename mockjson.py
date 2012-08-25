@@ -144,7 +144,7 @@ def generate_json_object(template, name=None):
                     generated = generated.replace(key, rd, 1)
         else:
             generated = (''.join(random.choice(string.letters)
-                         for i in xrange(length)))
+                         for i in range(length)))
     else:
         generated = template
     return generated
