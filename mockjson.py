@@ -51,7 +51,7 @@ def _random_data(key):
     if k_type is list or k_type is tuple:
         return d[random.randrange(len(d))]
     elif k_type is types.FunctionType:
-        return d
+        return d()
     raise Exception('invalid key type')
 
 
@@ -172,8 +172,6 @@ def generate_json_object(template, name=None):
             if matches:
                 for key in matches:
                     rd = _random_data(key)
-                    if type(rd) is types.FunctionType:
-                        rd = rd()
                     generated = generated.replace(key, rd, 1)
         else:
             generated = ''.join(random.choice(string.letters) for i in xrange(length))
