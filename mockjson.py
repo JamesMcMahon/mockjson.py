@@ -71,9 +71,7 @@ def _lorem_ipsum():
             reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum""".split())
-    length = random.randrange(len(words) / 2)
-
-    length = length if length > 2 else 2
+    length = random.randrange(2, len(words) / 2)
     result = ''
     for i in range(length):
         result += ' ' + words[random.randrange(len(words))]
