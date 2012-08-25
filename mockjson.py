@@ -11,49 +11,35 @@ import random
 import re
 import string
 import sys
-import types
 
 from datetime import datetime, timedelta
 
-data = {
-    'NUMBER': tuple("0123456789"),
-    'LETTER_UPPER': tuple(string.uppercase),
-    'LETTER_LOWER': tuple(string.lowercase),
-    'MALE_FIRST_NAME': ("James", "John", "Robert", "Michael", "William", "David",
-        "Richard", "Charles", "Joseph", "Thomas", "Christopher", "Daniel",
-        "Paul", "Mark", "Donald", "George", "Kenneth", "Steven", "Edward",
-        "Brian", "Ronald", "Anthony", "Kevin", "Jason", "Matthew", "Gary",
-        "Timothy", "Jose", "Larry", "Jeffrey", "Frank", "Scott", "Eric"),
-    'FEMALE_FIRST_NAME': ("Mary", "Patricia", "Linda", "Barbara", "Elizabeth",
-        "Jennifer", "Maria", "Susan", "Margaret", "Dorothy", "Lisa", "Nancy",
-        "Karen", "Betty", "Helen", "Sandra", "Donna", "Carol", "Ruth", "Sharon",
-        "Michelle", "Laura", "Sarah", "Kimberly", "Deborah", "Jessica",
-        "Shirley", "Cynthia", "Angela", "Melissa", "Brenda", "Amy", "Anna"),
-    'LAST_NAME': ("Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
-        "Davis", "Garcia", "Rodriguez", "Wilson", "Martinez", "Anderson",
-        "Taylor", "Thomas", "Hernandez", "Moore", "Martin", "Jackson",
-        "Thompson", "White", "Lopez", "Lee", "Gonzalez", "Harris", "Clark",
-        "Lewis", "Robinson", "Walker", "Perez", "Hall", "Young", "Allen")
-}
+_male_first_name = ("James", "John", "Robert", "Michael", "William", "David",
+    "Richard", "Charles", "Joseph", "Thomas", "Christopher", "Daniel",
+    "Paul", "Mark", "Donald", "George", "Kenneth", "Steven", "Edward",
+    "Brian", "Ronald", "Anthony", "Kevin", "Jason", "Matthew", "Gary",
+    "Timothy", "Jose", "Larry", "Jeffrey", "Frank", "Scott", "Eric")
+_female_first_name = ("Mary", "Patricia", "Linda", "Barbara", "Elizabeth",
+    "Jennifer", "Maria", "Susan", "Margaret", "Dorothy", "Lisa", "Nancy",
+    "Karen", "Betty", "Helen", "Sandra", "Donna", "Carol", "Ruth", "Sharon",
+    "Michelle", "Laura", "Sarah", "Kimberly", "Deborah", "Jessica",
+    "Shirley", "Cynthia", "Angela", "Melissa", "Brenda", "Amy", "Anna")
+_last_name = ("Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
+    "Davis", "Garcia", "Rodriguez", "Wilson", "Martinez", "Anderson",
+    "Taylor", "Thomas", "Hernandez", "Moore", "Martin", "Jackson",
+    "Thompson", "White", "Lopez", "Lee", "Gonzalez", "Harris", "Clark",
+    "Lewis", "Robinson", "Walker", "Perez", "Hall", "Young", "Allen")
+
+
+def _random_item(items):
+    return items[random.randrange(len(items))]
 
 
 def _random_data(key):
     key = key.lstrip('@')
-
-    params = re.findall(r"\(([^\)]+)\)", key)
-    params = params if params else []
-
     if not data.has_key(key):
-        return key  # FIXME log or exception
-
-    d = data[key]
-    k_type = type(d)
-    if k_type is list or k_type is tuple:
-        return d[random.randrange(len(d))]
-    elif k_type is types.FunctionType:
-        return d()
-    raise Exception('invalid key type')
-
+        return key
+    return data[key]()
 
 def _random_email():
     l = _random_data('@LETTER_LOWER')
@@ -117,16 +103,24 @@ def _random_minutes():
 def _random_seconds():
     return str(_random_date().second).zfill(2)
 
-# additional data definitions that are dependent on functions
-data['EMAIL'] = _random_email
-data['LOREM'] = _lorem
-data['LOREM_IPSUM'] = _lorem_ipsum
-data['DATE_YYYY'] = _random_year
-data['DATE_MM'] = _random_month
-data['DATE_DD'] = _random_day
-data['TIME_HH'] = _random_hour
-data['TIME_MM'] = _random_minutes
-data['TIME_SS'] = _random_seconds
+
+data = {
+    'NUMBER': lambda: _random_item("0123456789"),
+    'LETTER_UPPER': lambda: _random_item(string.uppercase),
+    'LETTER_LOWER': lambda: _random_item(string.lowercase),
+    'MALE_FIRST_NAME': lambda: _random_item(_male_first_name),
+    'FEMALE_FIRST_NAME': lambda: _random_item(_female_first_name),
+    'LAST_NAME': lambda: _random_item(_last_name),
+    'EMAIL':  _random_email,
+    'LOREM': _lorem,
+    'LOREM_IPSUM': _lorem_ipsum,
+    'DATE_YYYY': _random_year,
+    'DATE_MM': _random_month,
+    'DATE_DD': _random_day,
+    'TIME_HH': _random_hour,
+    'TIME_MM': _random_minutes,
+    'TIME_SS': _random_seconds
+}
 
 
 def generate_json_object(template, name=None):
