@@ -6,7 +6,10 @@ __author__ = "James McMahon"
 __copyright__ = "Copyright 2012, James McMahon"
 __license__ = "MIT"
 
-import json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 import random
 import re
 import string
