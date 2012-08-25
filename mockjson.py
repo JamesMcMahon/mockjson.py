@@ -171,7 +171,8 @@ def generate_json_object(template, name=None):
                     rd = _random_data(key)
                     generated = generated.replace(key, rd, 1)
         else:
-            generated = ''.join(random.choice(string.letters) for i in xrange(length))
+            generated = (''.join(random.choice(string.letters)
+                         for i in xrange(length)))
     else:
         generated = template
     return generated
