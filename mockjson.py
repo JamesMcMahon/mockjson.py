@@ -109,7 +109,6 @@ def generate_json_object(template, name=None):
             length = random.randint(length_min, length_max)
 
     t_type = type(template)
-
     if t_type is dict:
         generated = {}
         for key, value in template.iteritems():
