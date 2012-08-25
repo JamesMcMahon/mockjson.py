@@ -45,13 +45,6 @@ def _random_data(key):
     return data[key]()
 
 
-def _random_email():
-    l = _random_data('@LETTER_LOWER')
-    n1 = _random_data('@LAST_NAME').lower()
-    n2 = _random_data('@LAST_NAME').lower()
-    return l + '.' + n1 + '@' + n2 + '.com'
-
-
 def _lorem():
     words = tuple("""lorem ipsum dolor sit amet consectetur adipisicing elit
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
@@ -88,7 +81,12 @@ data = {
     'MALE_FIRST_NAME': lambda: _random_item(_male_first_name),
     'FEMALE_FIRST_NAME': lambda: _random_item(_female_first_name),
     'LAST_NAME': lambda: _random_item(_last_name),
-    'EMAIL': _random_email,
+    'EMAIL': lambda: (_random_data('@LETTER_LOWER')
+                      + '.'
+                      + _random_data('@LAST_NAME').lower()
+                      + '@'
+                      + _random_data('@LAST_NAME').lower()
+                      + '.com'),
     'LOREM': _lorem,
     'LOREM_IPSUM': _lorem_ipsum,
     'DATE_YYYY': lambda: str(_random_date().year),
