@@ -32,6 +32,13 @@ _last_name = ("Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
     "Taylor", "Thomas", "Hernandez", "Moore", "Martin", "Jackson",
     "Thompson", "White", "Lopez", "Lee", "Gonzalez", "Harris", "Clark",
     "Lewis", "Robinson", "Walker", "Perez", "Hall", "Young", "Allen")
+_lorem = tuple("""lorem ipsum dolor sit amet consectetur adipisicing elit
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+        Ut enim ad minim veniam quis nostrud exercitation ullamco laboris
+        nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur Excepteur sint occaecat cupidatat non proident sunt in
+        culpa qui officia deserunt mollit anim id est laborum""".split())
 
 
 def _random_item(items):
@@ -45,29 +52,11 @@ def _random_data(key):
     return data[key]()
 
 
-def _lorem():
-    words = tuple("""lorem ipsum dolor sit amet consectetur adipisicing elit
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-            Ut enim ad minim veniam quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur Excepteur sint occaecat cupidatat non proident sunt in
-            culpa qui officia deserunt mollit anim id est laborum""".split())
-    return words[random.randrange(len(words))]
-
-
 def _lorem_ipsum():
-    words = tuple("""Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum""".split())
-    length = random.randrange(2, len(words) / 2)
+    length = random.randrange(2, len(_lorem) / 2)
     result = ''
     for i in xrange(length):
-        result += ' ' + words[random.randrange(len(words))]
+        result += ' ' + _lorem[random.randrange(len(_lorem))]
     return result.strip()
 
 
@@ -87,7 +76,7 @@ data = {
                       + '@'
                       + _random_data('@LAST_NAME').lower()
                       + '.com'),
-    'LOREM': _lorem,
+    'LOREM': lambda: _random_item(_lorem),
     'LOREM_IPSUM': _lorem_ipsum,
     'DATE_YYYY': lambda: str(_random_date().year),
     'DATE_MM': lambda: str(_random_date().month).zfill(2),
