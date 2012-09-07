@@ -17,28 +17,28 @@ import sys
 
 from datetime import datetime, timedelta
 
-_male_first_name = ("James", "John", "Robert", "Michael", "William", "David",
+_male_first_name = ["James", "John", "Robert", "Michael", "William", "David",
     "Richard", "Charles", "Joseph", "Thomas", "Christopher", "Daniel",
     "Paul", "Mark", "Donald", "George", "Kenneth", "Steven", "Edward",
     "Brian", "Ronald", "Anthony", "Kevin", "Jason", "Matthew", "Gary",
-    "Timothy", "Jose", "Larry", "Jeffrey", "Frank", "Scott", "Eric")
-_female_first_name = ("Mary", "Patricia", "Linda", "Barbara", "Elizabeth",
+    "Timothy", "Jose", "Larry", "Jeffrey", "Frank", "Scott", "Eric"]
+_female_first_name = ["Mary", "Patricia", "Linda", "Barbara", "Elizabeth",
     "Jennifer", "Maria", "Susan", "Margaret", "Dorothy", "Lisa", "Nancy",
     "Karen", "Betty", "Helen", "Sandra", "Donna", "Carol", "Ruth", "Sharon",
     "Michelle", "Laura", "Sarah", "Kimberly", "Deborah", "Jessica",
-    "Shirley", "Cynthia", "Angela", "Melissa", "Brenda", "Amy", "Anna")
-_last_name = ("Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
+    "Shirley", "Cynthia", "Angela", "Melissa", "Brenda", "Amy", "Anna"]
+_last_name = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
     "Davis", "Garcia", "Rodriguez", "Wilson", "Martinez", "Anderson",
     "Taylor", "Thomas", "Hernandez", "Moore", "Martin", "Jackson",
     "Thompson", "White", "Lopez", "Lee", "Gonzalez", "Harris", "Clark",
-    "Lewis", "Robinson", "Walker", "Perez", "Hall", "Young", "Allen")
-_lorem = tuple("""lorem ipsum dolor sit amet consectetur adipisicing elit
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-        Ut enim ad minim veniam quis nostrud exercitation ullamco laboris
-        nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur Excepteur sint occaecat cupidatat non proident sunt in
-        culpa qui officia deserunt mollit anim id est laborum""".split())
+    "Lewis", "Robinson", "Walker", "Perez", "Hall", "Young", "Allen"]
+_lorem = """lorem ipsum dolor sit amet consectetur adipisicing elit
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+    Ut enim ad minim veniam quis nostrud exercitation ullamco laboris
+    nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur Excepteur sint occaecat cupidatat non proident sunt in
+    culpa qui officia deserunt mollit anim id est laborum""".split()
 
 
 def _random_data(key):
