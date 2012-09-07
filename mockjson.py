@@ -41,10 +41,6 @@ _lorem = tuple("""lorem ipsum dolor sit amet consectetur adipisicing elit
         culpa qui officia deserunt mollit anim id est laborum""".split())
 
 
-def _random_item(items):
-    return items[random.randrange(len(items))]
-
-
 def _random_data(key):
     key = key.lstrip('@')
     if not key in data:
@@ -64,19 +60,19 @@ def _random_date():
     return datetime.today() - timedelta(days=random.randrange(6571, 27375))
 
 data = {
-    'NUMBER': lambda: _random_item(string.digits),
-    'LETTER_UPPER': lambda: _random_item(string.uppercase),
-    'LETTER_LOWER': lambda: _random_item(string.lowercase),
-    'MALE_FIRST_NAME': lambda: _random_item(_male_first_name),
-    'FEMALE_FIRST_NAME': lambda: _random_item(_female_first_name),
-    'LAST_NAME': lambda: _random_item(_last_name),
+    'NUMBER': lambda: random.choice(string.digits),
+    'LETTER_UPPER': lambda: random.choice(string.uppercase),
+    'LETTER_LOWER': lambda: random.choice(string.lowercase),
+    'MALE_FIRST_NAME': lambda: random.choice(_male_first_name),
+    'FEMALE_FIRST_NAME': lambda: random.choice(_female_first_name),
+    'LAST_NAME': lambda: random.choice(_last_name),
     'EMAIL': lambda: (_random_data('@LETTER_LOWER')
                       + '.'
                       + _random_data('@LAST_NAME').lower()
                       + '@'
                       + _random_data('@LAST_NAME').lower()
                       + '.com'),
-    'LOREM': lambda: _random_item(_lorem),
+    'LOREM': lambda: random.choice(_lorem),
     'LOREM_IPSUM': _lorem_ipsum,
     'DATE_YYYY': lambda: str(_random_date().year),
     'DATE_MM': lambda: str(_random_date().month).zfill(2),
