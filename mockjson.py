@@ -128,7 +128,7 @@ def generate_json_object(template, name=None):
     return generated
 
 
-def generate_json(template, name=None):
+def generate_json(template):
     return json.dumps(generate_json_object(json_data), sort_keys=False)
 
 
