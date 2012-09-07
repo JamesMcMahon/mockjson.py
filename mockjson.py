@@ -42,7 +42,6 @@ _lorem = """lorem ipsum dolor sit amet consectetur adipisicing elit
 
 
 def _random_data(key):
-    key = key.lstrip('@')
     if not key in data:
         return key
     return data[key]()
@@ -63,11 +62,11 @@ data = dict(
     MALE_FIRST_NAME=lambda: random.choice(_male_first_name),
     FEMALE_FIRST_NAME=lambda: random.choice(_female_first_name),
     LAST_NAME=lambda: random.choice(_last_name),
-    EMAIL=lambda: (_random_data('@LETTER_LOWER')
+    EMAIL=lambda: (_random_data('LETTER_LOWER')
                       + '.'
-                      + _random_data('@LAST_NAME').lower()
+                      + _random_data('LAST_NAME').lower()
                       + '@'
-                      + _random_data('@LAST_NAME').lower()
+                      + _random_data('LAST_NAME').lower()
                       + '.com'),
     LOREM=lambda: random.choice(_lorem),
     LOREM_IPSUM=_lorem_ipsum,
@@ -119,7 +118,7 @@ def generate_json_object(template, name=None):
             matches = re.findall(r"(@[A-Z_0-9\(\),]+)", generated)
             if matches:
                 for key in matches:
-                    rd = _random_data(key)
+                    rd = _random_data(key.lstrip('@'))
                     generated = generated.replace(key, rd, 1)
         else:
             generated = (''.join(random.choice(string.letters)
