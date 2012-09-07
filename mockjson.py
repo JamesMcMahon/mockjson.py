@@ -129,7 +129,7 @@ def generate_json_object(template, name=None):
 
 
 def generate_json(template):
-    return json.dumps(generate_json_object(json_data), sort_keys=False)
+    return json.dumps(generate_json_object(json_data), sort_keys=True, indent=4)
 
 
 if __name__ == '__main__':
