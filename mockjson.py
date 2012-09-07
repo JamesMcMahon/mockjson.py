@@ -50,10 +50,7 @@ def _random_data(key):
 
 def _lorem_ipsum():
     length = random.randrange(2, len(_lorem) / 2)
-    result = ''
-    for i in xrange(length):
-        result += ' ' + _lorem[random.randrange(len(_lorem))]
-    return result.strip()
+    return ' '.join(random.choice(_lorem) for _ in xrange(length))
 
 
 def _random_date():
@@ -117,10 +114,8 @@ def generate_json_object(template, name=None):
     # is this always just going to be unicode here?
     elif t_type is str or t_type is unicode:
         if template:
-            generated = ''
             length = length if length else 1
-            for i in range(length):
-                generated += template
+            generated = ''.join(template for _ in xrange(length))
             matches = re.findall(r"(@[A-Z_0-9\(\),]+)", generated)
             if matches:
                 for key in matches:
