@@ -59,28 +59,28 @@ def _lorem_ipsum():
 def _random_date():
     return datetime.today() - timedelta(days=random.randrange(6571, 27375))
 
-data = {
-    'NUMBER': lambda: random.choice(string.digits),
-    'LETTER_UPPER': lambda: random.choice(string.uppercase),
-    'LETTER_LOWER': lambda: random.choice(string.lowercase),
-    'MALE_FIRST_NAME': lambda: random.choice(_male_first_name),
-    'FEMALE_FIRST_NAME': lambda: random.choice(_female_first_name),
-    'LAST_NAME': lambda: random.choice(_last_name),
-    'EMAIL': lambda: (_random_data('@LETTER_LOWER')
+data = dict(
+    NUMBER=lambda: random.choice(string.digits),
+    LETTER_UPPER=lambda: random.choice(string.uppercase),
+    LETTER_LOWER=lambda: random.choice(string.lowercase),
+    MALE_FIRST_NAME=lambda: random.choice(_male_first_name),
+    FEMALE_FIRST_NAME=lambda: random.choice(_female_first_name),
+    LAST_NAME=lambda: random.choice(_last_name),
+    EMAIL=lambda: (_random_data('@LETTER_LOWER')
                       + '.'
                       + _random_data('@LAST_NAME').lower()
                       + '@'
                       + _random_data('@LAST_NAME').lower()
                       + '.com'),
-    'LOREM': lambda: random.choice(_lorem),
-    'LOREM_IPSUM': _lorem_ipsum,
-    'DATE_YYYY': lambda: str(_random_date().year),
-    'DATE_MM': lambda: str(_random_date().month).zfill(2),
-    'DATE_DD': lambda: str(_random_date().day).zfill(2),
-    'TIME_HH': lambda: str(_random_date().hour).zfill(2),
-    'TIME_MM': lambda: str(_random_date().minute).zfill(2),
-    'TIME_SS': lambda: str(_random_date().second).zfill(2)
-}
+    LOREM=lambda: random.choice(_lorem),
+    LOREM_IPSUM=_lorem_ipsum,
+    DATE_YYYY=lambda: str(_random_date().year),
+    DATE_MM=lambda: str(_random_date().month).zfill(2),
+    DATE_DD=lambda: str(_random_date().day).zfill(2),
+    TIME_HH=lambda: str(_random_date().hour).zfill(2),
+    TIME_MM=lambda: str(_random_date().minute).zfill(2),
+    TIME_SS=lambda: str(_random_date().second).zfill(2)
+)
 
 
 def generate_json_object(template, name=None):
