@@ -85,7 +85,7 @@ data = dict(
 )
 
 
-def mock_object(template, name=None):
+def mock_object(template, increments={}, name=None):
     length = 0
     if name:
         matches = _re_range.search(name)
@@ -99,20 +99,26 @@ def mock_object(template, name=None):
     if t_type is dict:
         generated = {}
         for key, value in template.iteritems():
-            stripped_key = _re_strip_key.sub('', key)
-            generated[stripped_key] = mock_object(value, key)
-
             # handle increments
             inc_matches = _re_increments.search(key)
             if inc_matches and type(template[key]) is int:
                 increment = int(inc_matches.groups()[0])
-                template[key] += increment
+                if key in increments:
+                    increments[key] += increment
+                else:
+                    increments[key] = 0
+
+            stripped_key = _re_strip_key.sub('', key)
+            generated[stripped_key] = mock_object(value, increments, key)
     elif t_type is list:
         generated = []
         for i in xrange(length):
-            generated.append(mock_object(template[0]))
+            generated.append(mock_object(template[0], increments))
     elif t_type is int:
-        generated = length if matches else template
+        if name in increments:
+            generated = increments[name]
+        else:
+            generated = length if matches else template
     elif t_type is bool:
         # apparently getrandbits(1) is faster...
         generated = random.choice([True, False]) if matches else template
