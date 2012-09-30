@@ -55,6 +55,11 @@ def _lorem_ipsum():
 def _random_date():
     return datetime.today() - timedelta(days=random.randrange(6571, 27375))
 
+_re_range = re.compile(r"\w+\|(\d+)-(\d+)")
+_re_strip_key = re.compile(r"\|(\d+-\d+|\+\d+)")
+_re_increments = re.compile(r"\w+\|\+(\d+)")
+_re_key = re.compile(r"(@[A-Z_0-9\(\),]+)")
+
 data = dict(
     NUMBER=lambda: random.choice(string.digits),
     LETTER_UPPER=lambda: random.choice(string.uppercase),
@@ -82,7 +87,7 @@ data = dict(
 def mock_object(template, name=None):
     length = 0
     if name:
-        matches = re.search(r"\w+\|(\d+)-(\d+)", name)
+        matches = _re_range.search(name)
         if matches:
             groups = matches.groups()
             length_min = int(groups[0])
@@ -93,11 +98,11 @@ def mock_object(template, name=None):
     if t_type is dict:
         generated = {}
         for key, value in template.iteritems():
-            stripped_key = re.sub(r"\|(\d+-\d+|\+\d+)", '', key)
+            stripped_key = _re_strip_key.sub('', key)
             generated[stripped_key] = mock_object(value, key)
 
             # handle increments
-            inc_matches = re.search(r"\w+\|\+(\d+)", key)
+            inc_matches = _re_increments.search(key)
             if inc_matches and type(template[key]) is int:
                 increment = int(inc_matches.groups()[0])
                 template[key] += increment
@@ -115,7 +120,7 @@ def mock_object(template, name=None):
         if template:
             length = length if length else 1
             generated = ''.join(template for _ in xrange(length))
-            matches = re.findall(r"(@[A-Z_0-9\(\),]+)", generated)
+            matches = _re_key.findall(generated)
             if matches:
                 for key in matches:
                     rd = _random_data(key.lstrip('@'))
