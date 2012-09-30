@@ -112,10 +112,7 @@ def mock_object(template, increments={}, name=None):
             generated[stripped_key] = mock_object(value, increments, key)
         return generated
     elif t_type is list:
-        generated = []
-        for i in xrange(length):
-            generated.append(mock_object(template[0], increments))
-        return generated
+        return [mock_object(template[0], increments) for _ in xrange(length)]
     elif t_type is int:
         if name in increments:
             return increments[name]
