@@ -79,7 +79,7 @@ data = dict(
 )
 
 
-def generate_json_object(template, name=None):
+def mock_object(template, name=None):
     length = 0
     if name:
         matches = re.search(r"\w+\|(\d+)-(\d+)", name)
@@ -94,7 +94,7 @@ def generate_json_object(template, name=None):
         generated = {}
         for key, value in template.iteritems():
             stripped_key = re.sub(r"\|(\d+-\d+|\+\d+)", '', key)
-            generated[stripped_key] = generate_json_object(value, key)
+            generated[stripped_key] = mock_object(value, key)
 
             # handle increments
             inc_matches = re.search(r"\w+\|\+(\d+)", key)
@@ -104,7 +104,7 @@ def generate_json_object(template, name=None):
     elif t_type is list:
         generated = []
         for i in xrange(length):
-            generated.append(generate_json_object(template[0]))
+            generated.append(mock_object(template[0]))
     elif t_type is int:
         generated = length if matches else template
     elif t_type is bool:
@@ -128,12 +128,12 @@ def generate_json_object(template, name=None):
     return generated
 
 
-def generate_json(template):
-    return json.dumps(generate_json_object(json_data), sort_keys=True, indent=4)
+def mock_json(template):
+    return json.dumps(mock_object(json_data), sort_keys=True, indent=4)
 
 
 if __name__ == '__main__':
     arg = sys.argv[1:][0]
     with open(arg) as f:
         json_data = json.load(f)
-    print(generate_json(json_data))
+    print(mock_json(json_data))
