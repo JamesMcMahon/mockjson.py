@@ -55,6 +55,7 @@ def _lorem_ipsum():
 def _random_date():
     return datetime.today() - timedelta(days=random.randrange(6571, 27375))
 
+# assigning regexes to local variables removes regex cache lookup overhead
 _re_range = re.compile(r"\w+\|(\d+)-(\d+)")
 _re_strip_key = re.compile(r"\|(\d+-\d+|\+\d+)")
 _re_increments = re.compile(r"\w+\|\+(\d+)")
