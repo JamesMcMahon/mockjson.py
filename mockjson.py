@@ -110,18 +110,20 @@ def mock_object(template, increments={}, name=None):
 
             stripped_key = _re_strip_key.sub('', key)
             generated[stripped_key] = mock_object(value, increments, key)
+        return generated
     elif t_type is list:
         generated = []
         for i in xrange(length):
             generated.append(mock_object(template[0], increments))
+        return generated
     elif t_type is int:
         if name in increments:
-            generated = increments[name]
+            return increments[name]
         else:
-            generated = length if matches else template
+            return length if matches else template
     elif t_type is bool:
         # apparently getrandbits(1) is faster...
-        generated = random.choice([True, False]) if matches else template
+        return random.choice([True, False]) if matches else template
     # is this always just going to be unicode here?
     elif t_type is str or t_type is unicode:
         if template:
@@ -132,12 +134,12 @@ def mock_object(template, increments={}, name=None):
                 for key in matches:
                     rd = _random_data(key.lstrip('@'))
                     generated = generated.replace(key, rd, 1)
+            return generated
         else:
-            generated = (''.join(random.choice(string.letters)
+            return (''.join(random.choice(string.letters)
                          for i in xrange(length)))
     else:
-        generated = template
-    return generated
+        return template
 
 
 def mock_json(template):
